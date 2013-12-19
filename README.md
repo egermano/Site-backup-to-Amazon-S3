@@ -3,7 +3,7 @@ Site backup to Amazon S3
 
 (This is not really an application, just a manual and some lines of code)
 
-Amazon S3 can be an interestingly safe and cheap way to store your important data. Some of the most important data in the world is saved in... MySQL, and surely mine is quite important, so I needed such a script.
+Amazon S3 can be an interestingly safe and cheap way to store your important data. Some of the most important data in the world is saved in... so I needed such a script.
 
 If you have a 500mb database (that's 10 times larger than any small site), with the priciest plan, keeping 6 backups (two months, two weeks, two days) costs $0.42 a month ($0.14GB/month). With 99.999999999% durability and 99.99% availability. Uploads are free, downloads would happen only in case you actually need to retrieve the backup (which hopefully won't be needed, but first GB is free, and over that $0.12/GB).
 
@@ -33,7 +33,7 @@ Setup
 	
 6. Put the sitebackup.sh file somewhere in your server, like `/home/youruser`
 7. Give the file 755 permissions `chmod 755 /home/youruser/sitebackup.sh` or via FTP
-8. Edit the variables near the top of the sitebackup.sh file to match your bucket and MySQL authentication
+8. Edit the variables near the top of the sitebackup.sh file to match your bucket and folder to backup
 
 Now we're set. You can use it manually:
 
@@ -48,11 +48,11 @@ Now we're set. You can use it manually:
 	
 But, we don't want to think about it until something breaks! So enter `crontab -e` and insert the following after editing the folders
 
-	# daily MySQL backup to S3 (not on first day of month or sundays)
+	# daily Site backup to S3 (not on first day of month or sundays)
 	0 3 2-31 * 1-6 sh /home/youruser/sitebackup.sh day
-	# weekly MySQL backup to S3 (on sundays, but not the first day of the month)
+	# weekly Site backup to S3 (on sundays, but not the first day of the month)
 	0 3 2-31 * 0 sh /home/youruser/sitebackup.sh week
-	# monthly MySQL backup to S3
+	# monthly Site backup to S3
 	0 3 1 * * sh /home/youruser/sitebackup.sh month
 
 Or, if you'd prefer to have the script determine the current date and day of the week, insert the following after editing the folders
